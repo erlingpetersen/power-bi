@@ -1,0 +1,10 @@
+relationship fd1b5175-a2c7-4ba9-b8c2-e3429c726c27
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fct_tickets_data.Date
+	toColumn: LocalDateTable_50bb63b5-4ba2-40ec-a662-70f90478d902.Date
+
+relationship 0e8f4363-c8d4-427d-bfe8-9574593b966f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fct_tickets_data.'Resolution Date'
+	toColumn: LocalDateTable_7f1c4001-c775-46db-b666-4c67da696b25.Date
+

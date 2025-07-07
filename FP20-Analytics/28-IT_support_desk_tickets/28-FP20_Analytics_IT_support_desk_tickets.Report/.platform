@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "28-FP20_Analytics_IT_support_desk_tickets"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0651b9e0-fa0e-40ce-afe2-b6f0bd007e1d"
+  }
+}

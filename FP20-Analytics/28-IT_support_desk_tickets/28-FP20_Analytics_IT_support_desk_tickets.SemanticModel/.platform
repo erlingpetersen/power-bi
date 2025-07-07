@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "28-FP20_Analytics_IT_support_desk_tickets"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "21af9f22-402c-4fa9-b5e8-244fd0e21efc"
+  }
+}

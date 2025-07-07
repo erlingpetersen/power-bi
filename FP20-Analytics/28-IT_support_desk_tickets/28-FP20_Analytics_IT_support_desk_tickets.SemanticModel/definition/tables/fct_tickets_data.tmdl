@@ -1,0 +1,201 @@
+table fct_tickets_data
+	lineageTag: d6388ae1-b67c-4367-b407-d178becbae20
+
+	column 'Ticket ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: b7cd454b-9f8f-472b-9ee9-16a30fdcb1c3
+		summarizeBy: count
+		sourceColumn: Ticket ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 6301543d-0999-4801-82f0-bd6bd0612875
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: fd1b5175-a2c7-4ba9-b8c2-e3429c726c27
+			defaultHierarchy: LocalDateTable_50bb63b5-4ba2-40ec-a662-70f90478d902.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Resolution Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fcd0b0ff-4562-4a88-a3cd-3e85bf0851b4
+		summarizeBy: none
+		sourceColumn: Resolution Date
+
+		variation Variation
+			isDefault
+			relationship: 0e8f4363-c8d4-427d-bfe8-9574593b966f
+			defaultHierarchy: LocalDateTable_7f1c4001-c775-46db-b666-4c67da696b25.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Subject
+		dataType: string
+		lineageTag: fc84ecec-3361-42db-a5ab-1777d70a08b6
+		summarizeBy: none
+		sourceColumn: Subject
+
+		annotation SummarizationSetBy = Automatic
+
+	column Body
+		dataType: string
+		lineageTag: 7dc86499-7057-48ac-ada8-d32f732230ab
+		summarizeBy: none
+		sourceColumn: Body
+
+		annotation SummarizationSetBy = Automatic
+
+	column Answer
+		dataType: string
+		lineageTag: 2ad2ebd2-eed3-484c-82ec-7f4272f3a013
+		summarizeBy: none
+		sourceColumn: Answer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: aecc6593-3e0c-4fc9-baec-a6a5447effdc
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Queue
+		dataType: string
+		lineageTag: 23f27e60-15dd-4bc5-a67c-8a597678fd1f
+		summarizeBy: none
+		sourceColumn: Queue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		dataType: string
+		lineageTag: b41f99fb-7e02-47c0-9efa-9599f47c1210
+		summarizeBy: none
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primary Tag'
+		dataType: string
+		lineageTag: 7be8eeac-3c06-441e-81e9-3306b2ee91f3
+		summarizeBy: none
+		sourceColumn: Primary Tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Secondary Tag'
+		dataType: string
+		lineageTag: 900ae040-4de5-427f-9961-1d339ab77072
+		summarizeBy: none
+		sourceColumn: Secondary Tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 915df66d-da64-49a3-a948-65acf2cea00b
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Technical
+		dataType: string
+		lineageTag: b8ef9744-8e4d-46e4-84c7-74619c69e16d
+		summarizeBy: none
+		sourceColumn: Technical
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 49a2332b-48aa-497d-8d9f-b1f384970976
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resolution
+		dataType: string
+		lineageTag: 34cdf6e0-f37b-495c-95e2-c8a573574cae
+		summarizeBy: none
+		sourceColumn: Resolution
+
+		annotation SummarizationSetBy = Automatic
+
+	column Documentation
+		dataType: string
+		lineageTag: 062ba910-6621-4671-a054-6c3cfe716a07
+		summarizeBy: none
+		sourceColumn: Documentation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Additional
+		dataType: string
+		lineageTag: 58c76527-0f38-4e87-a77e-dc4ba457b770
+		summarizeBy: none
+		sourceColumn: Additional
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: d399d331-45ab-445d-820c-0b067c939eba
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 15fcdeec-6f46-4173-b5bd-b8af01ab2a4d
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: e5cb8f2b-6635-446f-b03e-1b57b33f4570
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fct_tickets_data = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\erlin\CursorProjects\power-bi\FP20-Analytics\28-IT_support_desk_tickets\IT_Support_Ticket_Desk_English.xlsx"), null, true),
+				    Data_Sheet = Source{[Item="Data",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Data_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Ticket ID", Int64.Type}, {"Date", type date}, {"Resolution Date", type date}, {"Subject", type text}, {"Body", type text}, {"Answer", type text}, {"Type", type text}, {"Queue", type text}, {"Priority", type text}, {"Primary Tag", type text}, {"Secondary Tag", type text}, {"Category", type text}, {"Technical", type text}, {"Status", type text}, {"Resolution", type text}, {"Documentation", type text}, {"Additional", type text}, {"Country", type text}, {"Latitude", type number}, {"Longitude", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

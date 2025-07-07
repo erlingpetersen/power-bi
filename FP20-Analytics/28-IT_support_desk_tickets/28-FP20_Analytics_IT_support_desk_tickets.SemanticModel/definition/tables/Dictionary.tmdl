@@ -1,0 +1,33 @@
+table Dictionary
+	lineageTag: 1de32a4f-6250-47bd-a6f8-b053e535acdc
+
+	column Column1
+		dataType: string
+		lineageTag: e96a031f-70fb-4977-87a4-30762b982cc2
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column2
+		dataType: string
+		lineageTag: 92203767-53a8-407d-a238-5a81625015e7
+		summarizeBy: none
+		sourceColumn: Column2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dictionary = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\erlin\CursorProjects\power-bi\FP20-Analytics\28-IT_support_desk_tickets\IT_Support_Ticket_Desk_English.xlsx"), null, true),
+				    Dictionary_Sheet = Source{[Item="Dictionary",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Dictionary_Sheet,{{"Column1", type text}, {"Column2", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

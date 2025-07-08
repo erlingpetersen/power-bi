@@ -19,6 +19,7 @@ ref table DateTableTemplate_b8ecc784-8806-4480-afe0-b56ecc943c74
 ref table LocalDateTable_50bb63b5-4ba2-40ec-a662-70f90478d902
 ref table LocalDateTable_7f1c4001-c775-46db-b666-4c67da696b25
 ref table Dictionary
+ref table _Measures
 
 ref cultureInfo en-US
 

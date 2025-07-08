@@ -30,7 +30,7 @@ table fct_tickets_data
 
 	column 'Resolution Date'
 		dataType: dateTime
-		formatString: Long Date
+		formatString: dd/mm/yyyy
 		lineageTag: fcd0b0ff-4562-4a88-a3cd-3e85bf0851b4
 		summarizeBy: none
 		sourceColumn: Resolution Date
@@ -43,6 +43,8 @@ table fct_tickets_data
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
 
 	column Subject
 		dataType: string

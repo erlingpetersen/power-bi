@@ -1,38 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
-  "name": "b27c4a48a5d089c04ae4",
+  "name": "04dfbce080642b3e229d",
   "position": {
-    "x": 132.48197734294541,
-    "y": 280.78269824922762,
-    "z": 0,
-    "height": 340.10298661174045,
-    "width": 990.648815653965,
-    "tabOrder": 0
+    "x": 131.328,
+    "y": 119.232,
+    "z": 2,
+    "height": 139.968,
+    "width": 173,
+    "tabOrder": 2
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "card",
     "query": {
       "queryState": {
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fct_tickets_data"
-                    }
-                  },
-                  "Property": "Date"
-                }
-              },
-              "queryRef": "fct_tickets_data.Date",
-              "nativeQueryRef": "Date",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -55,16 +36,16 @@
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fct_tickets_data"
+                    "Entity": "_Measures"
                   }
                 },
-                "Property": "Date"
+                "Property": "Total Tickets"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ],
         "isDefaultSort": true

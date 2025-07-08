@@ -1,19 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
-  "name": "b27c4a48a5d089c04ae4",
+  "name": "3a114da6161089bc80a4",
   "position": {
-    "x": 132.48197734294541,
-    "y": 280.78269824922762,
-    "z": 0,
-    "height": 340.10298661174045,
-    "width": 990.648815653965,
-    "tabOrder": 0
+    "x": 241,
+    "y": 882,
+    "z": 18001,
+    "height": 197,
+    "width": 183,
+    "tabOrder": 18001
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Category": {
+        "Rows": {
           "projections": [
             {
               "field": {
@@ -23,16 +23,16 @@
                       "Entity": "fct_tickets_data"
                     }
                   },
-                  "Property": "Date"
+                  "Property": "Priority"
                 }
               },
-              "queryRef": "fct_tickets_data.Date",
-              "nativeQueryRef": "Date",
+              "queryRef": "fct_tickets_data.Priority",
+              "nativeQueryRef": "Priority",
               "active": true
             }
           ]
         },
-        "Y": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -50,24 +50,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "fct_tickets_data"
-                  }
-                },
-                "Property": "Date"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true

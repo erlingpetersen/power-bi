@@ -1,19 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
-  "name": "b27c4a48a5d089c04ae4",
+  "name": "7caceaa2d819aeb1c812",
   "position": {
-    "x": 132.48197734294541,
-    "y": 280.78269824922762,
-    "z": 0,
-    "height": 340.10298661174045,
-    "width": 990.648815653965,
-    "tabOrder": 0
+    "x": 717.77548918640571,
+    "y": 17.796086508753863,
+    "z": 16,
+    "height": 65.25231719876416,
+    "width": 243.21318228630278,
+    "tabOrder": 16
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "slicer",
     "query": {
       "queryState": {
-        "Category": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -29,24 +29,6 @@
               "queryRef": "fct_tickets_data.Date",
               "nativeQueryRef": "Date",
               "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Total Tickets"
-                }
-              },
-              "queryRef": "_Measures.Total Tickets",
-              "nativeQueryRef": "Total Tickets"
             }
           ]
         }
@@ -69,6 +51,34 @@
         ],
         "isDefaultSort": true
       }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Between'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "slider": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }

@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
+        "x": 249,
         "y": 0
       },
       "nodes": [
@@ -19,7 +19,7 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
@@ -32,7 +32,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
@@ -44,7 +44,20 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 0
+          },
+          "nodeIndex": "dim_dates",
+          "nodeLineageTag": "a2a743e7-7d62-48a1-a093-0f5ae0d597d5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
         }
       ],
       "name": "All tables",

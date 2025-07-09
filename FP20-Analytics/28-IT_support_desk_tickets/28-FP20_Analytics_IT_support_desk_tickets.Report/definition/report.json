@@ -44,6 +44,11 @@
           "name": "CY24SU10",
           "path": "BaseThemes/CY24SU10.json",
           "type": "BaseTheme"
+        },
+        {
+          "name": "germany.states.topo",
+          "path": "Shapemaps/germany.states.topo.json",
+          "type": "ShapeMap"
         }
       ]
     }

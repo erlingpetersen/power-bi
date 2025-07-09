@@ -5,7 +5,8 @@ table _Measures
 		formatString: 0
 		lineageTag: 70541429-e846-4fb3-a521-02b9b306b1db
 
-	measure 'Total Tickets' = COUNT('fct_tickets_data'[Ticket ID])
+	measure 'Total Tickets' = COUNTROWS('fct_tickets_data')
+		formatString: 0
 		lineageTag: 122b7d4a-7706-48bb-9343-419a5f12017e
 
 	measure 'Open Tickets' = CALCULATE(COUNT('fct_tickets_data'[Ticket ID]), 'fct_tickets_data'[Status] = "Open")

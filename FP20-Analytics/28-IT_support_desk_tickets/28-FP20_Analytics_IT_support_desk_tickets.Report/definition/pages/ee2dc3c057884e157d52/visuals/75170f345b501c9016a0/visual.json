@@ -10,7 +10,7 @@
     "tabOrder": 7000
   },
   "visual": {
-    "visualType": "ribbonChart",
+    "visualType": "hundredPercentStackedColumnChart",
     "query": {
       "queryState": {
         "Category": {
@@ -21,24 +21,18 @@
                   "Expression": {
                     "Hierarchy": {
                       "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "fct_tickets_data"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "Date"
+                        "SourceRef": {
+                          "Entity": "dim_dates"
                         }
                       },
-                      "Hierarchy": "Date Hierarchy"
+                      "Hierarchy": "Year Hierarchy"
                     }
                   },
                   "Level": "Year"
                 }
               },
-              "queryRef": "fct_tickets_data.Date.Variation.Date Hierarchy.Year",
-              "nativeQueryRef": "Date Year",
+              "queryRef": "dim_dates.Year Hierarchy.Year",
+              "nativeQueryRef": "Year Hierarchy Year",
               "active": true
             },
             {
@@ -47,77 +41,19 @@
                   "Expression": {
                     "Hierarchy": {
                       "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "fct_tickets_data"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "Date"
+                        "SourceRef": {
+                          "Entity": "dim_dates"
                         }
                       },
-                      "Hierarchy": "Date Hierarchy"
+                      "Hierarchy": "Year Hierarchy"
                     }
                   },
                   "Level": "Quarter"
                 }
               },
-              "queryRef": "fct_tickets_data.Date.Variation.Date Hierarchy.Quarter",
-              "nativeQueryRef": "Date Quarter",
+              "queryRef": "dim_dates.Year Hierarchy.Quarter",
+              "nativeQueryRef": "Year Hierarchy Quarter",
               "active": true
-            },
-            {
-              "field": {
-                "HierarchyLevel": {
-                  "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "fct_tickets_data"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "Date"
-                        }
-                      },
-                      "Hierarchy": "Date Hierarchy"
-                    }
-                  },
-                  "Level": "Month"
-                }
-              },
-              "queryRef": "fct_tickets_data.Date.Variation.Date Hierarchy.Month",
-              "nativeQueryRef": "Date Month",
-              "active": false
-            },
-            {
-              "field": {
-                "HierarchyLevel": {
-                  "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "fct_tickets_data"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "Date"
-                        }
-                      },
-                      "Hierarchy": "Date Hierarchy"
-                    }
-                  },
-                  "Level": "Day"
-                }
-              },
-              "queryRef": "fct_tickets_data.Date.Variation.Date Hierarchy.Day",
-              "nativeQueryRef": "Date Day",
-              "active": false
             }
           ]
         },
@@ -158,6 +94,42 @@
           ]
         }
       }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableDetailDataLabel": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableValueDataLabel": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "detailLabelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }

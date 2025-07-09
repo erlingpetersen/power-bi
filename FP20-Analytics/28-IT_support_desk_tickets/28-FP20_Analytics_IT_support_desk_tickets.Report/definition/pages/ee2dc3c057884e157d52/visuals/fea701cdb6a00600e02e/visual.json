@@ -10,10 +10,28 @@
     "tabOrder": 9000
   },
   "visual": {
-    "visualType": "map",
+    "visualType": "shapeMap",
     "query": {
       "queryState": {
-        "Size": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_tickets_data"
+                    }
+                  },
+                  "Property": "Country"
+                }
+              },
+              "queryRef": "fct_tickets_data.Country",
+              "nativeQueryRef": "Country"
+            }
+          ]
+        },
+        "Value": {
           "projections": [
             {
               "field": {
@@ -28,42 +46,6 @@
               },
               "queryRef": "_Measures.Total Tickets",
               "nativeQueryRef": "Total Tickets"
-            }
-          ]
-        },
-        "X": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fct_tickets_data"
-                    }
-                  },
-                  "Property": "Longitude"
-                }
-              },
-              "queryRef": "fct_tickets_data.Longitude",
-              "nativeQueryRef": "Longitude"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fct_tickets_data"
-                    }
-                  },
-                  "Property": "Latitude"
-                }
-              },
-              "queryRef": "fct_tickets_data.Latitude",
-              "nativeQueryRef": "Latitude"
             }
           ]
         }
@@ -101,6 +83,46 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "shape": [
+        {
+          "properties": {
+            "map": {
+              "geoJson": {
+                "type": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'shared'"
+                    }
+                  }
+                },
+                "name": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'germany.states.topo'"
+                    }
+                  }
+                },
+                "content": {
+                  "expr": {
+                    "ResourcePackageItem": {
+                      "PackageName": "ShapeMap",
+                      "PackageType": 2,
+                      "ItemName": "germany.states.topo"
+                    }
+                  }
+                }
+              }
+            },
+            "projectionEnum": {
+              "expr": {
+                "Literal": {
+                  "Value": "'albersUsa'"
                 }
               }
             }

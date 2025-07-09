@@ -17,11 +17,6 @@ table fct_tickets_data
 		summarizeBy: none
 		sourceColumn: Date
 
-		variation Variation
-			isDefault
-			relationship: fd1b5175-a2c7-4ba9-b8c2-e3429c726c27
-			defaultHierarchy: LocalDateTable_50bb63b5-4ba2-40ec-a662-70f90478d902.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date

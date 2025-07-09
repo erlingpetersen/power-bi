@@ -17,18 +17,83 @@
           "projections": [
             {
               "field": {
-                "Column": {
+                "HierarchyLevel": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "fct_tickets_data"
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_dates"
+                        }
+                      },
+                      "Hierarchy": "Year Hierarchy"
                     }
                   },
-                  "Property": "Date"
+                  "Level": "Year"
                 }
               },
-              "queryRef": "fct_tickets_data.Date",
-              "nativeQueryRef": "Date",
+              "queryRef": "dim_dates.Year Hierarchy.Year",
+              "nativeQueryRef": "Year Hierarchy Year",
               "active": true
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_dates"
+                        }
+                      },
+                      "Hierarchy": "Year Hierarchy"
+                    }
+                  },
+                  "Level": "Quarter"
+                }
+              },
+              "queryRef": "dim_dates.Year Hierarchy.Quarter",
+              "nativeQueryRef": "Year Hierarchy Quarter",
+              "active": true
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_dates"
+                        }
+                      },
+                      "Hierarchy": "Year Hierarchy"
+                    }
+                  },
+                  "Level": "Month Name Short"
+                }
+              },
+              "queryRef": "dim_dates.Year Hierarchy.Month Name Short",
+              "nativeQueryRef": "Year Hierarchy Month Name Short",
+              "active": true
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_dates"
+                        }
+                      },
+                      "Hierarchy": "Year Hierarchy"
+                    }
+                  },
+                  "Level": "Week of Year Fixed"
+                }
+              },
+              "queryRef": "dim_dates.Year Hierarchy.Week of Year Fixed",
+              "nativeQueryRef": "Year Hierarchy Week of Year Fixed",
+              "active": false
             }
           ]
         },
@@ -50,26 +115,26 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "fct_tickets_data"
-                  }
-                },
-                "Property": "Date"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "62561e96a9526198ba65",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Tickets"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

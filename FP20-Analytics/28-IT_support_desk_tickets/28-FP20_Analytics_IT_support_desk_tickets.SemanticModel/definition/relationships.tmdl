@@ -1,10 +1,44 @@
-relationship fd1b5175-a2c7-4ba9-b8c2-e3429c726c27
-	joinOnDateBehavior: datePartOnly
-	fromColumn: fct_tickets_data.Date
-	toColumn: LocalDateTable_50bb63b5-4ba2-40ec-a662-70f90478d902.Date
-
 relationship 0e8f4363-c8d4-427d-bfe8-9574593b966f
 	joinOnDateBehavior: datePartOnly
 	fromColumn: fct_tickets_data.'Resolution Date'
 	toColumn: LocalDateTable_7f1c4001-c775-46db-b666-4c67da696b25.Date
+
+relationship 198fdab6-3f88-44f1-9b1f-d6629e545157
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'Start of Year'
+	toColumn: LocalDateTable_90cb33d4-0041-4d73-9f9d-1a9c7dc61aba.Date
+
+relationship 8903b892-fb4c-4046-92b1-e15d4249d413
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'End of Year'
+	toColumn: LocalDateTable_23afaa39-0e9e-4a29-b534-4af2a40337c0.Date
+
+relationship 9e4056a9-3b81-4d9e-88b5-65844791055b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'Start of Month'
+	toColumn: LocalDateTable_4f9cc8db-27bb-4b74-8307-869284ba1fe7.Date
+
+relationship bd5b7c91-f724-4f77-b64e-28fc0b44b675
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'End of Month'
+	toColumn: LocalDateTable_65cc1cb3-56c3-46af-9100-a77686c9f1ff.Date
+
+relationship 6c301251-fdae-407a-aeb1-ff31b7ed7867
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'Start of Week'
+	toColumn: LocalDateTable_ef6e247e-aaed-4069-afc4-ca067a3d258b.Date
+
+relationship 0c955f57-6f77-4c17-89ab-062da81e5fec
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'End of Week'
+	toColumn: LocalDateTable_0fe38ef5-a740-47eb-bc5d-ff62e3e2e2a6.Date
+
+relationship eae2b57a-0289-7cbb-2e89-ed88195d63be
+	fromColumn: fct_tickets_data.Date
+	toColumn: dim_dates.Date
+
+relationship 2349844c-704a-4619-9322-38606e254198
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.Date
+	toColumn: LocalDateTable_dc54bbe9-7073-4ce9-a1d0-f983ff037074.Date
 

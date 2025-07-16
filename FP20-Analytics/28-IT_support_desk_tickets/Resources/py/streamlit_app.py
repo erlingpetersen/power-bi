@@ -13,6 +13,10 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 import nltk
 from transformers import pipeline
+from bertopic import BERTopic
+from sklearn.feature_extraction.text import CountVectorizer
+import pandas as pd
+import streamlit as st
 
 # --- Procesamiento de datos (copiado de analysis.py) ---
 def normalize_columns(df):
@@ -431,3 +435,57 @@ INSTRUCCIONES DE EJECUCIÓN:
 """
 
 nltk.download('punkt') 
+
+st.header("Ticket Topic Clustering with Tag, Queue, and Priority")
+
+# Prepare data
+ticket_texts = df['body'].dropna().astype(str).tolist()
+meta = df[['custom_tag', 'queue', 'priority']].dropna()
+
+if ticket_texts and len(ticket_texts) == len(meta):
+    # Fit BERTopic
+    topic_model = BERTopic(verbose=True)
+    topics, probs = topic_model.fit_transform(ticket_texts)
+    df_topics = meta.copy()
+    df_topics['topic'] = topics
+    df_topics['body'] = ticket_texts
+
+    # Show top topics and their metadata
+    st.write("**Top Topics and Their Metadata:**")
+    topic_info = df_topics.groupby('topic').agg({
+        'body': 'count',
+        'custom_tag': lambda x: x.value_counts().idxmax(),
+        'queue': lambda x: x.value_counts().idxmax(),
+        'priority': lambda x: x.value_counts().idxmax()
+    }).rename(columns={'body': 'Ticket Count', 'custom_tag': 'Top Tag', 'queue': 'Top Queue', 'priority': 'Top Priority'})
+    st.dataframe(topic_info)
+
+    # Show representative sentences for each topic
+    st.write("**Representative Sentences for Each Topic:**")
+    for topic_num in topic_info.index[:5]:  # Show top 5 topics
+        st.subheader(f"Topic {topic_num}")
+        topic_examples = df_topics[df_topics['topic'] == topic_num]['body'].head(3).tolist()
+        for sent in topic_examples:
+            st.write(f"- {sent}")
+
+    # If you have an 'answer' or 'response' field:
+    if 'answer' in df.columns or 'response' in df.columns or 'resolution' in df.columns:
+        answer_col = None
+        for col in ['answer', 'response', 'resolution']:
+            if col in df.columns:
+                answer_col = col
+                break
+        if answer_col:
+            st.write("**Common Answers/Responses by Topic:**")
+            df_topics[answer_col] = df[answer_col]
+            for topic_num in topic_info.index[:5]:
+                st.subheader(f"Topic {topic_num} - Common Answers")
+                answers = df_topics[df_topics['topic'] == topic_num][answer_col].dropna().astype(str)
+                if not answers.empty:
+                    most_common = answers.value_counts().head(3)
+                    for ans, count in most_common.items():
+                        st.write(f"- {ans} ({count} times)")
+                else:
+                    st.write("No answers available for this topic.")
+else:
+    st.write("Not enough ticket text data for topic modeling.") 

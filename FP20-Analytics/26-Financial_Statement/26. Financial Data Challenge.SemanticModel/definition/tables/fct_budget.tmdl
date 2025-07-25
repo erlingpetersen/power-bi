@@ -1,0 +1,92 @@
+table fct_budget
+	lineageTag: 94ba4f98-ed1c-4cb5-a94c-c2d4b3821e0c
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2660c1be-29ed-4970-b498-489484d774bc
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATE
+		dataType: dateTime
+		formatString: mm/dd/yyyy
+		lineageTag: 290d989a-0780-4989-9199-9bb556dd361c
+		summarizeBy: none
+		sourceColumn: DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column COD_ACCOUNT
+		dataType: int64
+		formatString: 0
+		lineageTag: 11a062df-1eff-4e15-b638-598a2c811cd5
+		summarizeBy: none
+		sourceColumn: COD_ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACCOUNT
+		dataType: string
+		lineageTag: c2f29592-b6de-484f-8216-50eb414cdf76
+		summarizeBy: none
+		sourceColumn: ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column Short_CLASS
+		dataType: string
+		lineageTag: b149092c-7255-448f-8f32-a705064d33b8
+		summarizeBy: none
+		sourceColumn: Short_CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CLASS
+		dataType: string
+		lineageTag: c4b0110a-edd6-49b8-b77b-fed95d5a2348
+		summarizeBy: none
+		sourceColumn: CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVENUE/EXPENSES
+		dataType: string
+		lineageTag: f5e8eccd-3221-4e62-84ce-24dc8977da15
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: REVENUE/EXPENSES
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUDGET
+		dataType: double
+		lineageTag: 34c7d738-90aa-474e-9a77-9c4590cd2c24
+		summarizeBy: sum
+		sourceColumn: BUDGET
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fct_budget = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\erlin\CursorProjects\power-bi\FP20-Analytics\26-Financial_Statement\Dataset_Challenge_26_Finance_English Headers.xlsx"), null, true),
+				    BUDGET_Sheet = Source{[Item="BUDGET",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(BUDGET_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"DATE", type date}, {"COD_ACCOUNT", Int64.Type}, {"ACCOUNT", type text}, {"Short_CLASS", type text}, {"CLASS", type text}, {"REVENUE/EXPENSES", type text}, {"BUDGET", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

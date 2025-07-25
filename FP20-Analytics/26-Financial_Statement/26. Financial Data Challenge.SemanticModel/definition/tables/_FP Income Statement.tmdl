@@ -1,0 +1,77 @@
+table '_FP Income Statement'
+	lineageTag: e43774d8-0a5b-4925-9536-f774774dae00
+
+	column Parameter
+		lineageTag: 4892d9a3-1912-47c2-8a3a-008b67cbe00f
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 272a2da6-c8d7-4e65-97a0-e8273cfa58f6
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: ec3f360a-c274-44e6-a145-da95b9243b88
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value4
+		lineageTag: 3d92a5ce-5059-49fd-9384-5edbe42b851f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value4]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parameter = calculated
+		mode: import
+		source =
+				{
+				    ("01-Gross Result", NAMEOF( '_Measures'[Blank] ), 0, "01-Gross Result"),
+				    ("Recurring Income", NAMEOF('_Measures'[01.01 Recurring Income]), 1, "01-Gross Result"),
+				    ("Non Recurring Income", NAMEOF('_Measures'[01.02 Non Recurring Income]), 2, "01-Gross Result"),
+				    ("Product COGS", NAMEOF('_Measures'[01.03 Product COGS]), 3, "01-Gross Result"),
+				    ("SaaS COGS", NAMEOF('_Measures'[01.04 SaaS COGS]), 4, "01-Gross Result"),
+				    ("    Gross Result", NAMEOF('_Measures'[01.05 Gross Result]), 5, "01-Gross Result"),
+				    ("    Gross Margin", NAMEOF('_Measures'[01.06 Gross Margin]), 6, "01-Gross Result"),
+				    (" ", NAMEOF( '_Measures'[Blank 1] ), 7, "02-Operating Result"),
+				    ("02-Operating Result", NAMEOF( '_Measures'[Blank 2] ), 8, "02-Operating Result"),
+				    ("Payroll", NAMEOF('_Measures'[02.01 Payroll]), 9, "02-Operating Result"),
+				    ("Marketing", NAMEOF('_Measures'[02.02 Marketing]), 10, "02-Operating Result"),
+				    ("Other G&A", NAMEOF('_Measures'[02.03 Other G&A]), 11, "02-Operating Result"),
+				    ("Professional Fees", NAMEOF('_Measures'[02.04 Professional Fees]), 12, "02-Operating Result"),
+				    ("Operating Result", NAMEOF('_Measures'[02.05 Operating Result]), 13, "02-Operating Result"),
+				    ("  ", NAMEOF( '_Measures'[Blank 3] ), 14, "03-Result Before Taxes"),
+				    ("03-Result Before Taxes", NAMEOF( '_Measures'[Blank 4] ), 15, "03-Result Before Taxes"),
+				    ("Other Income", NAMEOF('_Measures'[03.01 Other Income]), 16, "03-Result Before Taxes"),
+				    ("Other Expenses", NAMEOF('_Measures'[03.02 Other Expenses]), 17, "03-Result Before Taxes"),
+				    ("Result Before Taxes", NAMEOF('_Measures'[03.03 Result Before Taxes]), 18, "03-Result Before Taxes"),
+				    ("   ", NAMEOF( '_Measures'[Blank 5] ), 19, "04-Net Result"),
+				    ("04-Net Result", NAMEOF( '_Measures'[Blank 6] ), 20, "04-Net Result"),
+				    ("Tax Provision", NAMEOF('_Measures'[04.01 Tax Provision]), 21, "04-Net Result"),
+				    ("Net Result", NAMEOF('_Measures'[04.02 Net Result]), 22, "04-Net Result")
+				}
+
+	annotation PBI_Id = ba351ddba15d41d2b567b43d6415c9aa
+

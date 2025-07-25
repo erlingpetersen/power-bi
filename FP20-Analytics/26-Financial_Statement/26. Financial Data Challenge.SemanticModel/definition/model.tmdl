@@ -1,0 +1,43 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_dates","fct_transactions","dim_accounts","fct_budget","DICTIONARY","_Measures","sources","dim_account_level_2"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.145.1105.0 (25.07)+decbc46fce458c5b8d5109d6f32a743f2ac949c8
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["CalcGroup","DevMode"]
+
+ref table dim_dates
+ref table DateTableTemplate_0237216e-2566-47f4-a81a-0a4f2e2a931d
+ref table LocalDateTable_beae3ee4-3284-411e-8e33-9c0575f26c32
+ref table LocalDateTable_aa9fcca6-67ee-481b-871b-e6f3b09c6608
+ref table LocalDateTable_1b994547-228e-4f8b-bf37-2b3fd776536c
+ref table LocalDateTable_79c5cdd0-3c76-4ea5-be40-5fa4ff8029a9
+ref table LocalDateTable_6edabcea-4fd8-400d-a1df-d624248fa97f
+ref table LocalDateTable_bf469f7d-66e5-4787-926c-c87a079d5a3a
+ref table fct_transactions
+ref table dim_accounts
+ref table fct_budget
+ref table DICTIONARY
+ref table _Measures
+ref table sources
+ref table dim_account_level_2
+ref table LocalDateTable_2c7236bb-4b54-4452-b7eb-70f09567fe98
+ref table '_CG Income Statement'
+ref table '_CG Income Statement Comparisons'
+ref table 'CG Income Statement Color Group'
+ref table '_FP Income Statement'
+ref table '_CG Income Statement Variance'
+
+ref cultureInfo en-US
+

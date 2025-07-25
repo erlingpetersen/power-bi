@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "26. Financial Data Challenge"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0e5d7c3e-b2d1-4219-8b9a-4398d897df7f"
+  }
+}

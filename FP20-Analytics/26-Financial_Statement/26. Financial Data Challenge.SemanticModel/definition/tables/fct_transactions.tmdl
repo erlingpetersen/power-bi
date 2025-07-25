@@ -1,0 +1,114 @@
+table fct_transactions
+	lineageTag: c1407c1e-a7dd-4a0f-95dd-3be8ef88a889
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: cda090bb-bc8e-4992-ab28-2618def0790d
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATE
+		dataType: dateTime
+		formatString: mm/dd/yyyy
+		lineageTag: de826a09-4cd0-4f13-a452-44a36cf03a5d
+		summarizeBy: none
+		sourceColumn: DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column COD_ACCOUNT
+		dataType: int64
+		formatString: 0
+		lineageTag: 67e2fbca-d4c5-4308-bd83-a901ee3ac692
+		summarizeBy: none
+		sourceColumn: COD_ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACCOUNT
+		dataType: string
+		lineageTag: 4e869849-d5d1-4a5f-b138-4f32b323ccc5
+		summarizeBy: none
+		sourceColumn: ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column Short_CLASS
+		dataType: string
+		lineageTag: 0ea8bb6c-5ebf-4063-b186-7d8ea7aa0a80
+		summarizeBy: none
+		sourceColumn: Short_CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CLASS
+		dataType: string
+		lineageTag: 6a8a2cd4-2978-40a9-85f1-f322a1cdda52
+		summarizeBy: none
+		sourceColumn: CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRANSACTION_TYPE
+		dataType: string
+		lineageTag: 168fac4e-799c-4121-952a-9049d04ba481
+		summarizeBy: none
+		sourceColumn: TRANSACTION_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column NAME
+		dataType: string
+		lineageTag: 9df61b4a-b983-478c-8ff6-a3152415e089
+		summarizeBy: none
+		sourceColumn: NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MEMO/DESCRIPTION
+		dataType: string
+		lineageTag: 2543bca4-2cbf-4f2d-bc39-25bd233d8133
+		summarizeBy: none
+		sourceColumn: MEMO/DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVENUE/EXPENSES
+		dataType: string
+		lineageTag: 1bf5d9d2-8c65-4c33-973d-2d9c281cc2a1
+		summarizeBy: none
+		sourceColumn: REVENUE/EXPENSES
+
+		annotation SummarizationSetBy = Automatic
+
+	column AMOUNT
+		dataType: int64
+		formatString: 0
+		lineageTag: bed80f4e-2487-46ff-b43f-84417b23d25e
+		summarizeBy: sum
+		sourceColumn: AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fct_transactions = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\erlin\CursorProjects\power-bi\FP20-Analytics\26-Financial_Statement\Dataset_Challenge_26_Finance_English Headers.xlsx"), null, true),
+				    TRANSACTION_Sheet = Source{[Item="TRANSACTION",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(TRANSACTION_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"DATE", type date}, {"COD_ACCOUNT", Int64.Type}, {"ACCOUNT", type text}, {"Short_CLASS", type text}, {"CLASS", type text}, {"TRANSACTION_TYPE", type text}, {"NAME", type text}, {"MEMO/DESCRIPTION", type text}, {"REVENUE/EXPENSES", type text}, {"AMOUNT", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,515 @@
+table _Measures
+	lineageTag: d902dfb7-ae3f-4729-9cbd-e01f0d437305
+
+	measure 'Total Plan' = sum(fct_budget[BUDGET])
+		formatString: 0
+		lineageTag: 15e613e6-8622-4f34-990f-2a8806be281b
+
+	measure 'Total Actual' = sum(fct_transactions[AMOUNT])
+		formatString: 0
+		lineageTag: 225c4301-3a05-44ba-bc5f-d6cda019e029
+
+	measure 'Gap Actual vs Budget' = ```
+			- ([Total Actual] - [Total Plan]) 
+			```
+		formatString: 0
+		lineageTag: 55cb0daf-b63a-424e-8e42-ede374c6017a
+
+	measure Waterfall = ```
+			VAR selectedCategory = SELECTEDVALUE(sources[Source])
+			VAR selectedBreakdown = SELECTEDVALUE(dim_account_level_2[LEVEL_02])
+			
+			-- Define reusable budget calculations
+			VAR BudgetValue = [Total Plan]
+			
+			-- Define reusable actuals vs budget calculations
+			VAR ActualsVsBudgetValue = [Gap Actual vs Budget]
+			
+			-- Define reusable call number calculations
+			VAR CallNumberValue = [Total Actual]
+			
+			-- Define logic for BUDGET category
+			VAR BudgetLogic = 
+			    SWITCH(
+			        selectedBreakdown,
+			        "Product COGS", 1 * ActualsVsBudgetValue,
+			        "SaaS COGS", 1 * ActualsVsBudgetValue,
+			        "Advertising & Marketing", 1 * ActualsVsBudgetValue,
+			        "Other G&A", 1 * ActualsVsBudgetValue,
+			        "Payroll", 1 * ActualsVsBudgetValue,
+			        "Professional Fees", 1 * ActualsVsBudgetValue,
+			        "Travel & Entertainment", 1 * ActualsVsBudgetValue,
+			        "Other Expense", 1 * ActualsVsBudgetValue,
+			        BudgetValue
+			    )
+			
+			-- Define logic for ACTUAL category
+			VAR ActualLogic = 
+			    SWITCH(
+			        selectedBreakdown,
+			        "Product COGS", 0,
+			        "SaaS COGS", 0,
+			        "Advertising & Marketing", 0,
+			        "Other G&A", 0,
+			        "Payroll", 0,
+			        "Professional Fees", 0,
+			        "Travel & Entertainment", 0,
+			        "Other Expense", 0,
+			        CallNumberValue
+			    )
+			
+			-- Return the final result based on the category
+			RETURN
+			    SWITCH(
+			        selectedCategory,
+			        "BUDGET", BudgetLogic,
+			        "ACTUAL", ActualLogic       
+			    )
+			
+			
+			```
+		lineageTag: 78f1ad1a-cbaa-4e96-bc14-a15fd0970879
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '01.01 Recurring Income' =
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Recurring Income"
+			)
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: ecf8872e-157c-4bb2-a105-ae76ffb3433b
+
+	measure '01.02 Non Recurring Income' = ```
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Non Recurring Income"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 903fe0b4-ff79-4d71-8a94-f7d56fce8cb9
+
+	measure '01.03 Product COGS' = ```
+			-
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Product COGS"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 418b62fd-edcc-4d63-acf7-f954776bcb22
+
+	measure '01.04 SaaS COGS' = ```
+			-
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "SaaS COGS"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 326bdd50-460a-4904-b0e1-5376b6333669
+
+	measure '02.01 Payroll' =
+			-
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Payroll"
+			)
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 10b0315a-a1f9-4148-80e7-bbd0bc5a7992
+
+	measure '02.03 Other G&A' = ```
+			-
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Other G&A"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: fed0f5c3-5c76-48bd-a322-d572b3022995
+
+	measure '02.02 Marketing' = ```
+			-
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Advertising & Marketing"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 33bd9700-0227-4f5c-9193-f7fba20a40cc
+
+	measure '02.04 Professional Fees' = ```
+			-
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Professional Fees"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 00470659-bc8b-4a78-8c35-a86eb580af3a
+
+	measure '03.01 Other Income' = ```
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Other income"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 0ad672dc-4b18-4b8e-82ec-8d48b11f91cd
+
+	measure '03.02 Other Expenses' = ```
+			-
+			CALCULATE(
+			    [Total Actual],
+			    dim_account_level_2[LEVEL_02] = "Other Expense"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: fb1768d1-eca3-4f8a-a742-aceee46d458f
+
+	measure '01.05 Gross Result' = ```
+			[01.01 Recurring Income] 
+			    + [01.02 Non Recurring Income] 
+			    + [01.03 Product COGS] 
+			    + [01.04 SaaS COGS]
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 326fe900-ed6c-4969-bb74-e558193f8552
+
+	measure '02.05 Operating Result' = ```
+			+ [01.05 Gross Result]
+			    + [02.01 Payroll]
+			    + [02.02 Marketing]
+			    + [02.03 Other G&A]
+			    + [02.04 Professional Fees]
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 7ae3caae-b01d-4723-8d5f-2e802d525300
+
+	measure '03.03 Result Before Taxes' = ```
+			+ [02.05 Operating Result]
+			    + [03.01 Other Income]
+			    + [03.02 Other Expenses]
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 52bc570f-1aa9-4e78-8177-7951a2a3814f
+
+	measure '04.01 Tax Provision' = ```
+			- [02.05 Operating Result] * 0.3
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: ce028db1-734d-48ab-accd-c5c7a5b71bd6
+
+	measure '04.02 Net Result' = ```
+			[02.05 Operating Result]
+			    + [04.01 Tax Provision]
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 3b92f748-d486-4d8b-aa3b-23170e0f10ff
+
+	measure '01.06 Gross Margin' = ```
+			DIVIDE(
+			    [01.05 Gross Result],
+			    [01.01 Recurring Income] + [01.02 Non Recurring Income],
+			    BLANK()
+			)
+			
+			```
+		formatString: 0.0 %
+		displayFolder: Income Statement
+		lineageTag: e63c00d2-a3a9-4910-b66e-cd025ae38a73
+
+	measure 'Dynamic Color' =
+			SWITCH(
+			    TRUE(),
+			    SELECTEDVALUE('_CG Income Statement Comparisons'[Name]) = "Actual", "Actual",
+			    BLANK()
+			)
+		displayFolder: Income Statement
+		lineageTag: 70ef22a0-51e2-4c43-8d5e-302a82e055b7
+
+	measure Blank = BLANK()
+		displayFolder: Income Statement
+		lineageTag: aa1acd14-513b-4af2-9b34-53eab33ee957
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Blank 1' = BLANK()
+		displayFolder: Income Statement
+		lineageTag: 3b44c075-46d4-4f14-bd83-d1a4baa29322
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Blank 2' = BLANK()
+		displayFolder: Income Statement
+		lineageTag: a9aa1c82-04fe-4909-98ef-136635183871
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Blank 3' = BLANK()
+		displayFolder: Income Statement
+		lineageTag: 1faa3cf5-cf2c-4ef8-8af6-c6e416abd991
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Blank 4' = BLANK()
+		displayFolder: Income Statement
+		lineageTag: 06f6aaa0-e722-465c-a5fe-21c3acffefd9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Blank 5' = BLANK()
+		displayFolder: Income Statement
+		lineageTag: c43c2035-8f59-4af1-82aa-61119ce92485
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Blank 6' = BLANK()
+		displayFolder: Income Statement
+		lineageTag: c80cae2b-265b-4884-82a8-645ec1ea70ae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '01.01 Recurring Income (budget)' =
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Recurring Income"
+			)
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: f4b2e2e8-46dc-412c-814f-dbfdc53003ff
+
+	measure '01.02 Non Recurring Income (budget)' = ```
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Non Recurring Income"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 5f447483-c69d-4a5e-9773-189e5b82f077
+
+	measure '01.03 Product COGS (budget)' = ```
+			-
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Product COGS"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 76f0b347-a93f-4e51-ad5f-00a2ba119331
+
+	measure '01.04 SaaS COGS (budget)' = ```
+			-
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "SaaS COGS"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 6c854e51-5110-479d-ba30-fa7fb838f556
+
+	measure '01.05 Gross Result (budget)' = ```
+			[01.01 Recurring Income (budget)] 
+			    + [01.02 Non Recurring Income (budget)] 
+			    + [01.03 Product COGS (budget)] 
+			    + [01.04 SaaS COGS (budget)]
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: c556e38e-3f23-470a-821c-12561996455e
+
+	measure '01.06 Gross Margin (budget)' = ```
+			DIVIDE(
+			    [01.05 Gross Result (budget)],
+			    [01.01 Recurring Income (budget)] + [01.02 Non Recurring Income (budget)],
+			    BLANK()
+			)
+			
+			```
+		formatString: 0.0 %
+		displayFolder: Income Statement
+		lineageTag: 48ca948e-f0ce-4da0-987a-43e0559c5485
+
+	measure '02.01 Payroll (budget)' =
+			-
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Payroll"
+			)
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 742ca26a-9f8e-448c-939c-b60dd44dbb7c
+
+	measure '02.02 Marketing (budget)' = ```
+			-
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Advertising & Marketing"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 3ac78c40-c1d4-4bb3-aec1-214dc493c9a2
+
+	measure '02.03 Other G&A (budget)' = ```
+			-
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Other G&A"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 1f48ff88-32d1-4e45-a3b5-76d32ea7ec31
+
+	measure '02.04 Professional Fees (budget)' = ```
+			-
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Professional Fees"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: c822a604-a7a6-40f0-acef-2235d75676a3
+
+	measure '02.05 Operating Result (budget)' = ```
+			+ [01.05 Gross Result (budget)]
+			    + [02.01 Payroll (budget)]
+			    + [02.02 Marketing (budget)]
+			    + [02.03 Other G&A (budget)]
+			    + [02.04 Professional Fees (budget)]
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 0c6d4277-5b18-4de1-bdc4-4ff65af8463b
+
+	measure '03.01 Other Income (budget)' = ```
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Other income"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 31b17600-0a69-4c63-8c55-89060d64df99
+
+	measure '03.02 Other Expenses (budget)' = ```
+			-
+			CALCULATE(
+			    [Total Plan],
+			    dim_account_level_2[LEVEL_02] = "Other Expense"
+			)
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 7d678690-b902-47fa-990d-9b1746d6d4da
+
+	measure '03.03 Result Before Taxes (budget)' = ```
+			+ [02.05 Operating Result (budget)]
+			    + [03.01 Other Income (budget)]
+			    + [03.02 Other Expenses (budget)]
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 1ebd3401-f23e-40e7-842c-f6328ac243e7
+
+	measure '04.01 Tax Provision (budget)' = ```
+			- [02.05 Operating Result (budget)] * 0.3
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: 0d341b9d-dbea-491b-97ad-b1a4a87dbda6
+
+	measure '04.02 Net Result (budget)' = ```
+			[02.05 Operating Result (budget)]
+			    + [04.01 Tax Provision (budget)]
+			
+			```
+		formatString: "$"#,##0,.0 K
+		displayFolder: Income Statement
+		lineageTag: a7c17ab5-c451-402f-98b4-648ad05cdecc
+
+	measure '%dif 01.01 Recurring Income vs. budget' = DIVIDE([01.01 Recurring Income] - [01.01 Recurring Income (budget)], [01.01 Recurring Income (budget)] , BLANK() )
+		displayFolder: Income Statement
+		lineageTag: 5c5ed8fb-9ab0-43bc-aa90-4d31b0a08d7e
+
+	measure '01.01 Recurring Income vs. budget' = [01.01 Recurring Income] - [01.01 Recurring Income (budget)]
+		displayFolder: Income Statement
+		lineageTag: 04e6660c-28fd-42ae-a54c-89b5d20d7be7
+
+	measure SPLY =
+			
+			CALCULATE ( [Total Actual],
+			    SAMEPERIODLASTYEAR ( dim_dates[Date] )
+			)
+		formatString: 0
+		lineageTag: 35593e9b-d4e3-41c3-81fe-a7f2347a9b80
+
+	measure '%dif vs SPLY' = ```
+			
+			    DIVIDE ( [Total Actual] - [SPLY], [SPLY] )
+			```
+		formatString: 0
+		lineageTag: 2a4490ce-933d-47ba-83a8-f54303ae8f1d
+
+	measure '%dif vs PLN' = ```
+			
+			    DIVIDE ( [Total Actual] - [Total Plan], [Total Plan] )
+			```
+		formatString: 0
+		lineageTag: 730ca4fd-0732-42d5-9122-59be859baafc
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

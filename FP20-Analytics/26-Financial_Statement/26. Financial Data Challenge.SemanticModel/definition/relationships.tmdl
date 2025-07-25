@@ -1,0 +1,55 @@
+relationship f130bc29-5aba-4184-9985-72550fcda88f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'Start of Year'
+	toColumn: LocalDateTable_beae3ee4-3284-411e-8e33-9c0575f26c32.Date
+
+relationship a19bd926-1155-4adf-af50-2483ca5eba0f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'End of Year'
+	toColumn: LocalDateTable_aa9fcca6-67ee-481b-871b-e6f3b09c6608.Date
+
+relationship 767b21ae-af67-48f0-8c9a-e2a52fe49194
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'Start of Month'
+	toColumn: LocalDateTable_1b994547-228e-4f8b-bf37-2b3fd776536c.Date
+
+relationship f0b0cc68-3c4e-4df5-b5f8-4f4f3effc6f5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'End of Month'
+	toColumn: LocalDateTable_79c5cdd0-3c76-4ea5-be40-5fa4ff8029a9.Date
+
+relationship 4369acdb-639e-4946-b285-39a8b1bcea53
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'Start of Week'
+	toColumn: LocalDateTable_6edabcea-4fd8-400d-a1df-d624248fa97f.Date
+
+relationship 7218e91d-8967-4469-9aa0-8900cf6bfbcf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.'End of Week'
+	toColumn: LocalDateTable_bf469f7d-66e5-4787-926c-c87a079d5a3a.Date
+
+relationship AutoDetected_1f583f79-fe53-45a4-a19b-4410885f1726
+	fromColumn: fct_transactions.COD_ACCOUNT
+	toColumn: dim_accounts.COD_ACCOUNT
+
+relationship AutoDetected_9b1e9c10-9ac6-4316-9b9f-90821152b3f2
+	fromColumn: fct_budget.COD_ACCOUNT
+	toColumn: dim_accounts.COD_ACCOUNT
+
+relationship AutoDetected_54817eb3-c5db-4ac1-bfcc-b3d4dfcd5555
+	fromColumn: dim_accounts.LEVEL_02
+	toColumn: dim_account_level_2.LEVEL_02
+
+relationship 53bf9632-1d18-223e-119f-3997e14bdb94
+	fromColumn: fct_budget.DATE
+	toColumn: dim_dates.Date
+
+relationship 2d020b69-93e5-9ac9-2bcb-0703590a77a5
+	fromColumn: fct_transactions.DATE
+	toColumn: dim_dates.Date
+
+relationship 11a1e74d-4daf-4d88-8d48-85010020af43
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_dates.Date
+	toColumn: LocalDateTable_2c7236bb-4b54-4452-b7eb-70f09567fe98.Date
+

@@ -1,0 +1,83 @@
+table '_CG Income Statement'
+	lineageTag: d0d92760-4262-4086-a184-6a858876620f
+
+	calculationGroup
+
+		calculationItem 'Recurring Income' = [01.01 Recurring Income]
+
+		calculationItem 'Non Recurring Income' = [01.02 Non Recurring Income]
+
+		calculationItem 'Product COGS' = [01.03 Product COGS]
+
+		calculationItem 'SaaS COGS' = [01.04 SaaS COGS]
+
+		calculationItem 'Gross Result' = [01.05 Gross Result]
+
+		calculationItem 'Gross Margin' = [01.06 Gross Margin]
+
+		calculationItem Payroll = [02.01 Payroll]
+
+		calculationItem Marketing = [02.02 Marketing]
+
+		calculationItem 'Other G&A' = [02.03 Other G&A]
+
+		calculationItem 'Professional Fees' = [02.04 Professional Fees]
+
+		calculationItem 'Operating Result' = [02.05 Operating Result]
+
+		calculationItem 'Other Income' = [03.01 Other Income]
+
+		calculationItem 'Other Expenses' = [03.02 Other Expenses]
+
+		calculationItem 'Result Before Taxes' = [03.03 Result Before Taxes]
+
+		calculationItem 'Tax Provision' = [04.01 Tax Provision]
+
+		calculationItem 'Net Result' = [04.02 Net Result]
+
+	measure 'Selected Measure' = SELECTEDMEASURE()
+		lineageTag: 2e548481-c0bb-4e86-ae60-9aefea1b946b
+
+	column Measures
+		dataType: string
+		lineageTag: f3114386-645e-40e2-955e-f54b03786c21
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: c7da65ec-6660-4b7f-9221-92404651266c
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measures Group' =
+			SWITCH(
+			    '_CG Income Statement'[Measures],
+			    "Recurring Income", "01-Gross Result",
+			    "Non Recurring Income", "01-Gross Result",
+			    "Product COGS", "01-Gross Result",
+			    "SaaS COGS", "01-Gross Result",
+			    "Gross Result", "01-Gross Result",
+			    "Gross Margin", "01-Gross Result",
+			    "Payroll", "02-Operating Result",
+			    "Marketing", "02-Operating Result",
+			    "Other G&A", "02-Operating Result",
+			    "Professional Fees", "02-Operating Result",
+			    "Operating Result", "02-Operating Result",
+			    "Other Income", "03-Result Before Taxes",
+			    "Other Expenses", "03-Result Before Taxes",
+			    "Result Before Taxes", "03-Result Before Taxes",
+			    "Tax Provision", "04-Net Result",
+			    "Net Result", "04-Net Result"
+			)
+		lineageTag: f4a0d437-99b3-4a90-815a-6733f78a7032
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+

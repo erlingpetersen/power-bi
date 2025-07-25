@@ -1,0 +1,41 @@
+table DICTIONARY
+	lineageTag: afa9fc73-152f-403e-9122-d6dde488fac7
+
+	column Column1
+		dataType: string
+		lineageTag: f347d944-b610-442a-8cfb-f9156074e4f0
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column2
+		dataType: string
+		lineageTag: a45bd5f5-09dd-40e6-bf78-cb06984744f9
+		summarizeBy: none
+		sourceColumn: Column2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column3
+		dataType: string
+		lineageTag: ed10ee19-5d61-4f51-9a12-cc2e3bd88ffc
+		summarizeBy: none
+		sourceColumn: Column3
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DICTIONARY = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\erlin\CursorProjects\power-bi\FP20-Analytics\26-Financial_Statement\Dataset_Challenge_26_Finance_English Headers.xlsx"), null, true),
+				    DICTIONARY_Sheet = Source{[Item="DICTIONARY",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(DICTIONARY_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

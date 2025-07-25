@@ -1,0 +1,43 @@
+{
+  "name": "Custom",
+  "textClasses": {
+    "title": {
+      "fontFace": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif"
+    }
+  },
+  "dataColors": [
+    "#3D5A80",
+    "#98C1D9",
+    "#E0FBFC",
+    "#EE6C4D",
+    "#2B2D42",
+    "#8D99AE",
+    "#EDF2F4",
+    "#355070"
+  ],
+  "minimum": "#E05959",
+  "visualStyles": {
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F0F0F0"
+              }
+            }
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F0F0F0"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+table dim_accounts
+	lineageTag: 0c759d05-4bc2-4b02-b4c8-14ca26221a78
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 335b7baf-5775-43ab-88ae-38a74bce1b63
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_ACCOUNT
+		dataType: string
+		lineageTag: 50871906-fb99-4cce-b4cb-3c8287b8b8f7
+		summarizeBy: none
+		sourceColumn: COD_ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACCOUNT
+		dataType: string
+		lineageTag: 5d682b43-2f05-4d50-b0e2-add44a2b60e2
+		summarizeBy: none
+		sourceColumn: ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVENUE/EXPENSES
+		dataType: string
+		lineageTag: d12663c2-3bae-446e-bd0e-674d05b80fde
+		summarizeBy: none
+		sourceColumn: REVENUE/EXPENSES
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVEL_01
+		dataType: string
+		lineageTag: eca6ed2f-49f3-4a5d-a065-af8868943b19
+		summarizeBy: none
+		sourceColumn: LEVEL_01
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVEL_02
+		dataType: string
+		lineageTag: d36f8063-7c90-448d-a9fe-78fb1ae9dcd6
+		summarizeBy: none
+		sourceColumn: LEVEL_02
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortIndex
+		dataType: int64
+		lineageTag: a4df105f-0d7f-4e14-97fe-fd02988f6bf6
+		summarizeBy: sum
+		sourceColumn: SortIndex
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IsPercent
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a7f356db-1225-41b0-9a51-972a7e457684
+		summarizeBy: none
+		sourceColumn: IsPercent
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalcID
+		dataType: string
+		lineageTag: 8553cdd1-c120-47b0-b81c-9e15a89444db
+		summarizeBy: none
+		sourceColumn: CalcID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CLASS
+		dataType: string
+		lineageTag: f42cab9e-36d7-4679-9eba-3c06f6a5eaed
+		summarizeBy: none
+		sourceColumn: CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsHeader
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a40368e1-ea5c-456c-85ed-a7a06cc6c026
+		summarizeBy: none
+		sourceColumn: IsHeader
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsSpacer
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: db85960b-8df7-48d7-8076-3eac10d07766
+		summarizeBy: none
+		sourceColumn: IsSpacer
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_accounts = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\erlin\CursorProjects\power-bi\FP20-Analytics\26-Financial_Statement\Dataset_Challenge_26_Finance_English Headers.xlsx"), null, true),
+				    ACCOUNTS_Sheet = Source{[Item="ACCOUNTS",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(ACCOUNTS_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"COD_ACCOUNT", Int64.Type}, {"ACCOUNT", type text}, {"REVENUE/EXPENSES", type text}, {"LEVEL_01", type text}, {"LEVEL_02", type text}}),
+				    Extras   = #table(
+				        type table[
+				            COD_ACCOUNT = text,
+				            ACCOUNT     = text,
+				            CLASS       = text,        // existing 01‑Revenue, 02‑COGS, etc.
+				            SortIndex   = Int64.Type,
+				            IsHeader    = logical,
+				            IsSpacer    = logical,
+				            IsPercent   = logical,
+				            CalcID      = text
+				        ],
+				        {
+				            {"H01", "01‑Gross Result",         "HEADER",  100, true,  false, false, "HDR_GR"},
+				            {"SP1", "",                        "SPACER",  110, false, true,  false, "SP1"},
+				            {"GMVAL", "Gross Result",          "CALC",    120, false, false, false, "GM_VAL"},
+				            {"GMPCT", "Gross Margin %",        "CALC",    130, false, false, true,  "GM_PCT"},
+				            {"SP2", "",                        "SPACER",  140, false, true,  false, "SP2"},
+				            {"H02", "02‑Operating Result",     "HEADER",  200, true,  false, false, "HDR_OP"},
+				            {"OPVAL", "Operating Result",      "CALC",    290, false, false, false, "OP_VAL"},
+				            {"SP3", "",                        "SPACER",  300, false, true,  false, "SP3"},
+				            {"H03", "03‑Result Before Taxes",  "HEADER",  400, true,  false, false, "HDR_RBT"},
+				            {"RBTV", "Result Before Taxes",    "CALC",    490, false, false, false, "RBT_VAL"},
+				            {"SP4", "",                        "SPACER",  500, false, true,  false, "SP4"},
+				            {"H04", "04‑Net Result",           "HEADER",  600, true,  false, false, "HDR_NET"},
+				            {"NRES", "Net Result",             "CALC",    690, false, false, false, "NET_VAL"}
+				        }),
+				    Comb     = Table.Combine({#"Changed Type", Extras})
+				in  Comb
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

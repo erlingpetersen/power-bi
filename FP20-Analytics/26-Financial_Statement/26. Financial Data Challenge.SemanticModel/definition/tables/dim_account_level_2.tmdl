@@ -1,0 +1,28 @@
+table dim_account_level_2
+	lineageTag: f365f18a-3e3b-40f9-92b2-4d0500de4903
+
+	column LEVEL_02
+		dataType: string
+		lineageTag: 4a134a37-774e-4033-b791-32c1cf44fcc9
+		summarizeBy: none
+		sourceColumn: LEVEL_02
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_account_level_2 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\erlin\OneDrive - Arhus\Freelance\Portfolio\.xslx\_data sources\FP20 Analytics\Dataset_Challenge_26_Finance_English\Dataset_Challenge_26_Finance_English Headers.xlsx"), null, true),
+				    ACCOUNTS_Sheet = Source{[Item="ACCOUNTS",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(ACCOUNTS_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"COD_ACCOUNT", Int64.Type}, {"ACCOUNT", type text}, {"REVENUE/EXPENSES", type text}, {"LEVEL_01", type text}, {"LEVEL_02", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"LEVEL_02"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

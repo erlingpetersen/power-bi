@@ -3,8 +3,13 @@
   "themeCollection": {
     "baseTheme": {
       "name": "CY24SU10",
-      "reportVersionAtImport": "5.65",
+      "reportVersionAtImport": "5.59",
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Custom4510795789722818.json",
+      "reportVersionAtImport": "5.65",
+      "type": "RegisteredResources"
     }
   },
   "objects": {
@@ -44,11 +49,17 @@
           "name": "CY24SU10",
           "path": "BaseThemes/CY24SU10.json",
           "type": "BaseTheme"
-        },
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
         {
-          "name": "germany.states.topo",
-          "path": "Shapemaps/germany.states.topo.json",
-          "type": "ShapeMap"
+          "name": "Custom4510795789722818.json",
+          "path": "Custom4510795789722818.json",
+          "type": "CustomTheme"
         }
       ]
     }

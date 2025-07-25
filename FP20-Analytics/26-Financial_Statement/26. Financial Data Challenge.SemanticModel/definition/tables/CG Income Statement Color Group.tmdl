@@ -1,0 +1,17 @@
+table 'CG Income Statement Color Group'
+	lineageTag: a873cc3e-180a-4341-b9ba-2444dce6c448
+
+	column Measures
+		lineageTag: 2752930f-1f74-425c-92f0-2843140e255e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _CG Income Statement[Measures]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'CG Income Statement Color Group' = calculated
+		mode: import
+		source = ALLNOBLANKROW('_CG Income Statement'[Measures])
+
+	annotation PBI_Id = 4b8d6838c46f43179fc00bb1f896f518
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "26. Financial Data Challenge"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "44ee39b6-0577-4a5a-8f2d-aaa1c21d89c9"
+  }
+}

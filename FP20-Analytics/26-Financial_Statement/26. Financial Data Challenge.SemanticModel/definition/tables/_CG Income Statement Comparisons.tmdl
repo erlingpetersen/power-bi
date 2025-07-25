@@ -1,0 +1,128 @@
+table '_CG Income Statement Comparisons'
+	lineageTag: 6e267bc2-b830-4669-ad81-019a866d5928
+
+	calculationGroup
+		precedence: 1
+
+		calculationItem Actual = SELECTEDMEASURE()
+
+		calculationItem SPLY =
+				CALCULATE(
+				    SELECTEDMEASURE(),
+				    SAMEPERIODLASTYEAR(dim_dates[Date])
+				)
+
+		calculationItem '%dif vs SPLY' = ```
+				VAR CY = 
+				    SELECTEDMEASURE()
+				
+				VAR PY = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        SAMEPERIODLASTYEAR(dim_dates[Date])
+				    )
+				VAR YOY = CY - PY
+				
+				RETURN
+				    DIVIDE(
+				        YOY,
+				        PY,
+				        BLANK()
+				    )
+				```
+
+			formatStringDefinition = "#,##0.0 %"
+
+		calculationItem PLN = ```
+				SWITCH(
+				    SELECTEDMEASURE(),
+				    [Blank], [Blank],
+				    [01.01 Recurring Income], [01.01 Recurring Income (budget)],
+				    [01.02 Non Recurring Income], [01.02 Non Recurring Income (budget)],
+				    [01.03 Product COGS], [01.03 Product COGS (budget)],
+				    [01.04 SaaS COGS], [01.04 SaaS COGS (budget)],
+				    [01.05 Gross Result], [01.05 Gross Result (budget)],
+				    [01.06 Gross Margin], [01.06 Gross Margin (budget)],
+				    [Blank 1], [Blank 1],
+				    [Blank 2], [Blank 2],
+				    [02.01 Payroll], [02.01 Payroll (budget)],
+				    [02.02 Marketing], [02.02 Marketing (budget)],
+				    [02.03 Other G&A], [02.03 Other G&A (budget)],
+				    [02.04 Professional Fees], [02.04 Professional Fees (budget)],
+				    [02.05 Operating Result], [02.05 Operating Result (budget)],
+				    [Blank 3], [Blank 3],
+				    [Blank 4], [Blank 4],
+				    [03.01 Other Income], [03.01 Other Income (budget)],
+				    [03.02 Other Expenses], [03.02 Other Expenses (budget)],
+				    [03.03 Result Before Taxes], [03.03 Result Before Taxes (budget)],
+				    [Blank 5], [Blank 5],
+				    [Blank 6], [Blank 6],
+				    [04.01 Tax Provision], [04.01 Tax Provision (budget)],
+				    [04.02 Net Result], [04.02 Net Result (budget)]
+				)
+				
+				
+				```
+
+		calculationItem '%dif vs PLN' = ```
+				VAR ACT = 
+				    SELECTEDMEASURE()
+				
+				VAR PLN = 
+				    SWITCH(
+				    SELECTEDMEASURE(),
+				    [Blank], [Blank],
+				    [01.01 Recurring Income], [01.01 Recurring Income (budget)],
+				    [01.02 Non Recurring Income], [01.02 Non Recurring Income (budget)],
+				    [01.03 Product COGS], [01.03 Product COGS (budget)],
+				    [01.04 SaaS COGS], [01.04 SaaS COGS (budget)],
+				    [01.05 Gross Result], [01.05 Gross Result (budget)],
+				    [01.06 Gross Margin], [01.06 Gross Margin (budget)],
+				    [Blank 1], [Blank 1],
+				    [Blank 2], [Blank 2],
+				    [02.01 Payroll], [02.01 Payroll (budget)],
+				    [02.02 Marketing], [02.02 Marketing (budget)],
+				    [02.03 Other G&A], [02.03 Other G&A (budget)],
+				    [02.04 Professional Fees], [02.04 Professional Fees (budget)],
+				    [02.05 Operating Result], [02.05 Operating Result (budget)],
+				    [Blank 3], [Blank 3],
+				    [Blank 4], [Blank 4],
+				    [03.01 Other Income], [03.01 Other Income (budget)],
+				    [03.02 Other Expenses], [03.02 Other Expenses (budget)],
+				    [03.03 Result Before Taxes], [03.03 Result Before Taxes (budget)],
+				    [Blank 5], [Blank 5],
+				    [Blank 6], [Blank 6],
+				    [04.01 Tax Provision], [04.01 Tax Provision (budget)],
+				    [04.02 Net Result], [04.02 Net Result (budget)]
+				)
+				
+				VAR PLNATT = ACT - PLN
+				
+				RETURN
+				    DIVIDE(
+				        PLNATT,
+				        PLN,
+				        BLANK()
+				    )
+				```
+
+			formatStringDefinition = "#,##0.0 %"
+
+	column Name
+		dataType: string
+		lineageTag: 42777930-bb0f-463d-9d03-32d61977f225
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		isHidden
+		lineageTag: 3e243c63-7a2d-40f1-bee4-47bf8075bbd7
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
